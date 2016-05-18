@@ -78,7 +78,6 @@ oneNode() {
   dockerBuild
   sqlitetestest
   integrationtest
-  mysqltest
   postgrestest
   oracletest
   apidoc
@@ -86,7 +85,7 @@ oneNode() {
 
 twoNodes() {
   case "$NODE_INDEX" in
-    0) lint; dockerBuild; sqlitetest integrationtest; mysqltest;;
+    0) lint; dockerBuild; sqlitetest integrationtest;;
     1) dockerBuild; oracletest; postgrestest; apidoc;;
     *) echo "ERROR: invalid usage"; exit 2;;
   esac
@@ -95,7 +94,7 @@ twoNodes() {
 threeNodes() {
   case "$NODE_INDEX" in
     0) lint; dockerBuild; sqlitetest integrationtest;;
-    1) dockerBuild; postgrestest; mysqltest;;
+    1) dockerBuild; postgrestest;;
     2) oracletest; apidoc;;
     *) echo "ERROR: invalid usage"; exit 2;;
   esac
@@ -105,7 +104,7 @@ fourNodes() {
   case "$NODE_INDEX" in
     0) dockerBuild; sqlitetest; postgrestest;;
     1) integrationtest;;
-    2) lint; dockerBuild; mysqltest; apidoc;;
+    2) lint; dockerBuild; apidoc;;
     3) oracletest;;
     *) echo "ERROR: invalid usage"; exit 2;;
   esac

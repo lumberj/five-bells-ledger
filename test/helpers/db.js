@@ -1,7 +1,7 @@
 'use strict'
 
 const knex = require('../../src/lib/knex').knex
-const knexConfig = require('../../src/lib/knex').config
+const createTables = require('../../src/lib/db').createTables
 const Account = require('../../src/models/db/account').Account
 const Transfer = require('../../src/models/db/transfer').Transfer
 const Subscription = require('../../src/models/db/subscription').Subscription
@@ -32,7 +32,7 @@ exports.init = function * () {
     yield knex.schema.dropTableIfExists(t).then()
   }
 
-  yield knex.migrate.latest(knexConfig).then()
+  yield createTables(knex)
   init = true
   return
 }
@@ -41,6 +41,10 @@ exports.clean = function * () {
   for (let t of tables) {
     yield knex(t).truncate().then()
   }
+}
+
+exports.setHoldBalance = function * (balance) {
+  yield knex('accounts').where('name', 'hold').update({balance})
 }
 
 exports.addAccounts = function * (accounts) {
