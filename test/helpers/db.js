@@ -1,6 +1,7 @@
 'use strict'
 
 const knex = require('../../src/lib/knex').knex
+const knexConfig = require('../../src/lib/knex').config
 const createTables = require('../../src/lib/db').createTables
 const Account = require('../../src/models/db/account').Account
 const Transfer = require('../../src/models/db/transfer').Transfer
@@ -27,12 +28,20 @@ const migrationTables = [
 // Only run migrations once during tests
 let init = false
 exports.init = function * () {
+  return
   if (init) return
+
+  if (knexConfig.client === 'strong-oracle') {
+    yield createTables(knex, knexConfig)
+    init = true
+    return
+  }
+
   for (let t of tables.concat(migrationTables)) {
     yield knex.schema.dropTableIfExists(t).then()
   }
 
-  yield createTables(knex)
+  yield createTables(knex, knexConfig)
   init = true
   return
 }

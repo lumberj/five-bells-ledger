@@ -29,6 +29,7 @@ create table if not exists "transfers" (
 "prepared_at" timestamp,
 "executed_at" timestamp,
 "rejected_at" timestamp);
+
 create table if not exists "subscriptions" (
 "id" char(36) not null primary key,
 "owner" varchar(1024),

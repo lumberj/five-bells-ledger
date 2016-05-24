@@ -3,9 +3,10 @@
 const InsufficientFundsError = require('../errors/insufficient-funds-error')
 
 function adjustBalance (account, amount, transaction) {
-  const updateSQL = 'UPDATE accounts SET balance = balance + ? WHERE name = ?'
+  const updateSQL = 'UPDATE "accounts" SET "balance" = "balance" + ? WHERE "name" = ?'
   /* eslint-disable handle-callback-err */
   return transaction.raw(updateSQL, [amount, account]).catch((error) => {
+    console.log(error)
     throw new InsufficientFundsError('Sender has insufficient funds.', account)
   })
   /* eslint-enable */

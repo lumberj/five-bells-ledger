@@ -270,7 +270,7 @@ describe('Subscriptions', function () {
     })
   })
 
-  describe('Retry failed notifications', function () {
+  describe.only('Retry failed notifications', function () {
     it('re-posts the notification until success', function * () {
       const subscriberNock1 = nock('http://subscriber.example')
         .post('/notifications')

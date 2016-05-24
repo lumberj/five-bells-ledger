@@ -67,7 +67,7 @@ class App {
     this.notificationWorker.start()
 
     if (this.config.getIn(['db', 'sync'])) {
-      yield createTables(knex.knex)
+      yield createTables(knex.knex, knex.config)
     }
     yield seedDB(this.config)
 
