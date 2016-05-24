@@ -28,6 +28,9 @@ const migrationTables = [
 // Only run migrations once during tests
 let init = false
 exports.init = function * () {
+  // TODO: Create dropTable fn and run before createTable
+  // To reset database
+  // Use LEDGER_DB_URI=oracle://ledger0_north:password@localhost/xe LEDGER_DB_SYNC=1 npm start
   return
   if (init) return
 
